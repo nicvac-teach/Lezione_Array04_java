@@ -27,48 +27,54 @@ Per calcolare la temperatura media per ogni fascia oraria definiremo la funzione
 
 ## Implementazione della soluzione
 
-Nel file *main.cpp*, completa il contenuto della funzione *calcolaMassimo*, che trova la temperatura massima contenuta nella matrice, insieme alle sue coordinate riga-colonna. La coordinata riga corrispende al giorno e la coordinata colonna corrisponde alla fascia oraria in cui si è registrata la temperatura massima.
+Nel file *Esercizio.java*, completa il contenuto della funzione *calcolaMassimo*, che trova la temperatura massima contenuta nella matrice, insieme alle sue coordinate riga-colonna. La coordinata riga corrispende al giorno e la coordinata colonna corrisponde alla fascia oraria in cui si è registrata la temperatura massima.
 
 La funzione deve avere i seguenti parametri:
 * Parametro di input: matrice M su cui trovare il valore massimo.
 * Parametri di input: RIGHE e COLONNE, che rappresentano di quante righe e colonne è composta la matrice.
-* Parametro di input/output: giornoMAX, cioè la riga (il giorno) in cui è stato trovato il massimo.
-* Parametro di input/output: orarioMAX, cioè la colonna (la fascia oraria) in cui è stato trovato il massimo.
-* Parametri di output: il valore massimo trovato.
+* Parametro di output Max:
+  * il valore massimo trovato.
+  * giornoMAX, cioè la riga (il giorno) in cui è stato trovato il massimo.
+  * orarioMAX, cioè la colonna (la fascia oraria) in cui è stato trovato il massimo.
 
 <hr/>
 <details>
   <summary>Solo dopo aver svolto l'esercizio, apri qui per vedere la soluzione</summary>
 
 ```Java
-int calcolaMassimo( matrix<int> M, int RIGHE, int COLONNE, 
-                    int & giornoMAX, int& orarioMAX ) {
-  //L'algoritmo è molto simile al calcolo del massimo visto per i vettori. Qui bisogna però gestire righe e colonne.
-  //Inizializzo massimo al primo elemento della matrice
-  int massimo = M[0][0];
-  for (int i=0; i<=RIGHE-1; i=i+1) {
-    for (int j=0; j<=COLONNE-1; j=j+1) {
-      //Se la cella corrente è maggiore del massimo conservato finora...
-      if (M[i][j] > massimo) {
-        // ... aggiorno il massimo
-        massimo = M[i][j];
-        //Annoto anche in quale riga e colonna ho trovato il massimo
-        giornoMAX = i;
-        orarioMAX = j;
-      }
+    //Valori multipli di ritorno per il metodo calcolaMassimo
+    public static record Max(int massimo, int rIdx, int cIdx) { }
+
+    // Metodo per calcolare il massimo nella matrice
+    public static Max calcolaMassimo(int[][] M, int RIGHE, int COLONNE) {
+        
+        // Assumo che il massimo sia il primo elemento della matrice, cioè alle coordinate (0,0)
+        int rIdx = 0;
+        int cIdx = 0;
+        // Scansione della matrice per righe:
+        for (int i = 0; i <= RIGHE - 1; i = i + 1) {
+            for (int j = 0; j <= COLONNE - 1; j = j + 1) {
+                // Se la cella corrente è maggiore del massimo corrente...
+                if (M[i][j] > M[rIdx][cIdx]) {
+                    // ... aggiorno il massimo: Annoto in quale riga e colonna ho trovato il massimo
+                    rIdx = i;
+                    cIdx = j;
+                }
+            }
+        }
+        int massimo = M[rIdx][cIdx];
+        return new Max(massimo, rIdx, cIdx);
     }
-  }
-  return massimo;
-}
 ```
 </details>
+<hr/>
 
-Nel file *main.cpp*, completa il contenuto della funzione *calcolaMedia*, che calcola la media di una singola fascia oraria, cioè di una singola colonna. 
+Nel file *Esercizio.java*, completa il contenuto della funzione *calcolaMedia*, che calcola la media di una singola fascia oraria, cioè di una singola colonna. 
 
 La funzione deve avere i seguenti parametri:
 * Parametro di input: matrice M su cui calcolare la media.
 * Parametri di input: RIGHE e COLONNE, che rappresentano di quante righe e colonne è composta la matrice.
-* Parametro di input: jFasciaOraria, l'indice della colonna su cui si vuole calcolare la media
+* Parametro di input: cIdx, l'indice della colonna su cui si vuole calcolare la media
 * Parametri di input/output: nessuno.
 * Parametri di output: la media calcolata sulla colonna jFasciaOraria.
 
@@ -77,47 +83,48 @@ La funzione deve avere i seguenti parametri:
   <summary>Solo dopo aver svolto l'esercizio, apri qui per vedere la soluzione</summary>
 
 ```Java
-float calcolaMedia( matrix<int> M, int RIGHE, int COLONNE, 
-                    int jFasciaOraria ) {
-
-  //Accumulo i valori della colonna jFasciaOraria
-  float somma = 0;
-  //Scorro la matrice lungo la colonna jFasciaOraria
-  for (int i=0; i<=RIGHE-1; i=i+1) {
-    //Accumulo i valori della colonna jFasciaOraria
-    somma = somma + M[i][jFasciaOraria];
-  }
-
-  //calcolo la media
-  float media = somma / RIGHE;
-  return media;
-}
+    // Metodo per calcolare la media di una colonna
+    public static float calcolaMedia(int[][] M, int RIGHE, int COLONNE, int cIdx) {
+        // Accumulo i valori della colonna jFasciaOraria
+        float somma = 0;
+        
+        // Scorro la matrice lungo la colonna jFasciaOraria
+        for (int i = 0; i <= RIGHE - 1; i = i + 1) {
+            // Accumulo i valori della colonna jFasciaOraria
+            somma = somma + M[i][cIdx];
+        }
+        
+        // calcolo la media
+        float media = somma / RIGHE;
+        return media;
+    }
 ```
 </details>
+<hr/>
 
 Avendo tutte le funzioni a disposizione, è possibile ora scrivere la funzione *main*.
 
 In *main()*, dichiarare le variabili GIORNI=7 e ORE=5 e dichiarare quindi matrice T di dimensione GIORNIxORE.
 Riempire la matrice con numeri casuali usando la funzione già disponibile nell'esercizio *riempiCasuale*.<br/>
-Visualizzare il contenuto della matrice con l'istruzione *cout << matrice;*<br/>
+Visualizzare il contenuto della matrice con l'istruzione *UtilsMatrice.visualizza(matrice);*<br/>
 
 <hr/>
 <details>
   <summary>Solo dopo aver svolto l'esercizio, apri qui per vedere la soluzione</summary>
 
 ```Java
-int main() {
-  int GIORNI=7;
-  int ORE=5;
-
-  matrix<int> T(GIORNI, ORE);
-  riempiCasuale(T, GIORNI, ORE);
-  cout << "Temperature registrate: " << endl << T << endl;
-    
-}
-
+    public static void main(String args[]) {
+        int GIORNI = 7;
+        int ORE = 5;
+        int[][] T = new int[GIORNI][ORE];
+        
+        riempiCasuale(T, GIORNI, ORE, 290, 300);
+        System.out.println("Temperature registrate:");
+        UtilsMatrice.visualizza(T);
+    }
 ```
 </details>
+<hr/>
 
 
 Invocare le funzioni *calcolaMassimo* per calcolare la temperatura massima, insieme al giorno e fascia oraria in cui si è registrata.
@@ -128,20 +135,17 @@ Visualizzare i dati calcolati.
   <summary>Solo dopo aver svolto l'esercizio, apri qui per vedere la soluzione</summary>
 
 ```Java
-int main() {
-  ... 
-  int giornoMAX = 0;
-  int orarioMAX = 0;
-  int temperaturaMAX = calcolaMassimo(T, GIORNI, ORE, giornoMAX, orarioMAX);
-
-  cout << "Temperatura massima: " << temperaturaMAX << endl;
-  cout << "Giorno: " << giornoMAX+1 <<"°" << endl;
-  cout << "Fascia oraria: " << orarioMAX+1 <<"°" << endl;  
-  cout << endl;
-}
-
+    public static void main(String args[]) {
+        ...        
+        Max risultato = calcolaMassimo(T, GIORNI, ORE);
+        System.out.println("Temperatura massima: " + risultato.massimo);
+        System.out.println("Giorno: " + (risultato.rIdx() + 1) + "°");
+        System.out.println("Fascia oraria: " + (risultato.cIdx() + 1) + "°");
+        System.out.println();
+    }
 ```
 </details>
+<hr/>
 
 Per ogni fascia oraria, invocare la funzione *calcolaMedia* per calcolare la media delle temperature su quella fascia oraria.
 
@@ -150,18 +154,18 @@ Per ogni fascia oraria, invocare la funzione *calcolaMedia* per calcolare la med
   <summary>Solo dopo aver svolto l'esercizio, apri qui per vedere la soluzione</summary>
 
 ```Java
-int main() {
-  ... 
-  cout << "Temperature medie per fasce orarie:" << endl;
-  for (int j=0; j<=ORE-1; j=j+1) {
-    float mediaFasciaOraria = calcolaMedia(T, GIORNI, ORE, j);
-    cout << mediaFasciaOraria << " ";
-  }
-  cout << endl;
-}
-
+    public static void main(String args[]) {
+        ...        
+        System.out.println("Temperature medie per fasce orarie:");
+        for (int j = 0; j <= ORE - 1; j = j + 1) {
+            float mediaFasciaOraria = calcolaMedia(T, GIORNI, ORE, j);
+            System.out.print(mediaFasciaOraria + " ");
+        }
+        System.out.println();
+    }
 ```
 </details>
+<hr/>
 
 Eseguire il programma per controllare che l'output sia analogo al seguente:
 ```
