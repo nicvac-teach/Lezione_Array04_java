@@ -36,10 +36,11 @@ La funzione deve avere i seguenti parametri:
 * Parametro di input/output: orarioMAX, cioè la colonna (la fascia oraria) in cui è stato trovato il massimo.
 * Parametri di output: il valore massimo trovato.
 
+<hr/>
 <details>
   <summary>Solo dopo aver svolto l'esercizio, apri qui per vedere la soluzione</summary>
 
-```C++
+```Java
 int calcolaMassimo( matrix<int> M, int RIGHE, int COLONNE, 
                     int & giornoMAX, int& orarioMAX ) {
   //L'algoritmo è molto simile al calcolo del massimo visto per i vettori. Qui bisogna però gestire righe e colonne.
@@ -71,10 +72,11 @@ La funzione deve avere i seguenti parametri:
 * Parametri di input/output: nessuno.
 * Parametri di output: la media calcolata sulla colonna jFasciaOraria.
 
+<hr/>
 <details>
   <summary>Solo dopo aver svolto l'esercizio, apri qui per vedere la soluzione</summary>
 
-```C++
+```Java
 float calcolaMedia( matrix<int> M, int RIGHE, int COLONNE, 
                     int jFasciaOraria ) {
 
@@ -99,10 +101,11 @@ In *main()*, dichiarare le variabili GIORNI=7 e ORE=5 e dichiarare quindi matric
 Riempire la matrice con numeri casuali usando la funzione già disponibile nell'esercizio *riempiCasuale*.<br/>
 Visualizzare il contenuto della matrice con l'istruzione *cout << matrice;*<br/>
 
+<hr/>
 <details>
   <summary>Solo dopo aver svolto l'esercizio, apri qui per vedere la soluzione</summary>
 
-```C++
+```Java
 int main() {
   int GIORNI=7;
   int ORE=5;
@@ -120,10 +123,11 @@ int main() {
 Invocare le funzioni *calcolaMassimo* per calcolare la temperatura massima, insieme al giorno e fascia oraria in cui si è registrata.
 Visualizzare i dati calcolati.
 
+<hr/>
 <details>
   <summary>Solo dopo aver svolto l'esercizio, apri qui per vedere la soluzione</summary>
 
-```C++
+```Java
 int main() {
   ... 
   int giornoMAX = 0;
@@ -141,10 +145,11 @@ int main() {
 
 Per ogni fascia oraria, invocare la funzione *calcolaMedia* per calcolare la media delle temperature su quella fascia oraria.
 
+<hr/>
 <details>
   <summary>Solo dopo aver svolto l'esercizio, apri qui per vedere la soluzione</summary>
 
-```C++
+```Java
 int main() {
   ... 
   cout << "Temperature medie per fasce orarie:" << endl;
